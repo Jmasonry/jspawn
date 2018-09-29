@@ -17,6 +17,11 @@ public final class ConstantPoolBuilder {
         return getOrCreate(constant);
     }
 
+    public short appendDescriptor(Type type) {
+        String descriptor = type.getDescriptor();
+        return appendUTF8(descriptor);
+    }
+
     public short appendClass(Type type) {
         String typeName = type.getInternalName();
         var nameIndex = appendUTF8(typeName);

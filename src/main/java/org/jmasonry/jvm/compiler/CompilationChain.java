@@ -2,6 +2,7 @@ package org.jmasonry.jvm.compiler;
 
 import org.jmasonry.jvm.classfile.ClassFileVersion;
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
+import org.jmasonry.jvm.classfile.fields.FieldPoolBuilder;
 import org.jmasonry.jvm.types.Type;
 import org.jmasonry.jvm.types.TypeDeclaration;
 import org.jmasonry.jvm.types.TypeDefinition;
@@ -19,14 +20,17 @@ final class CompilationChain {
     }
 
     List<CompilationStep> getSteps() {
-        ConstantPoolBuilder poolBuilder = createConstantPoolBuilder();
+        ConstantPoolBuilder constPoolBuilder = createConstantPoolBuilder();
+        FieldPoolBuilder fieldPoolBuilder = new FieldPoolBuilder(constPoolBuilder);
 
         return Arrays.asList(
+                new AnalyseFields(fieldPoolBuilder, type.getFields()),
+
                 new WriteMagic(),
                 new WriteVersion(version),
-                new WriteConstantPool(poolBuilder),
+                new WriteConstantPool(constPoolBuilder),
                 new WriteSelfDeclaration(type.getDeclaration()),
-                new WriteFields(),
+                new WriteFields(fieldPoolBuilder),
                 new WriteMethods(),
                 new WriteAttributes()
         );
