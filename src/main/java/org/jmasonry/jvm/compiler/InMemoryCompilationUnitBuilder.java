@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 final class InMemoryCompilationUnitBuilder implements CompilationUnitBuilder {
-    public static final String EXCEPTION_MESSAGE = "Could not append to the in memory array";
+    private static final String EXCEPTION_MESSAGE = "Could not append to the in memory array";
     private final ByteArrayOutputStream bytes = new ByteArrayOutputStream();
     private final DataOutputStream outputStream = new DataOutputStream(bytes);
 
