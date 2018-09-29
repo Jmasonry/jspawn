@@ -1,7 +1,7 @@
 package org.jmasonry.jvm.compiler;
 
-import org.jmasonry.jvm.Type;
-import org.jmasonry.jvm.dsl.ClassDefinition;
+import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.types.TypeDeclaration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -31,8 +31,8 @@ class WriteSelfDeclarationTest {
     @Test
     void self_type_has_offset_of_2() {
         // given
-        ClassDefinition classDefinition = ClassDefinition.create(SELF_TYPE, SUPER_TYPE);
-        WriteSelfDeclaration step = new WriteSelfDeclaration(classDefinition);
+        TypeDeclaration typeDeclaration = TypeDeclaration.create(SELF_TYPE, SUPER_TYPE);
+        WriteSelfDeclaration step = new WriteSelfDeclaration(typeDeclaration);
 
         // when
         step.execute(builder);
@@ -45,8 +45,8 @@ class WriteSelfDeclarationTest {
     @Test
     void self_type_has_offset_of_4() {
         // given
-        ClassDefinition classDefinition = ClassDefinition.create(SELF_TYPE, SUPER_TYPE);
-        WriteSelfDeclaration step = new WriteSelfDeclaration(classDefinition);
+        TypeDeclaration typeDeclaration = TypeDeclaration.create(SELF_TYPE, SUPER_TYPE);
+        WriteSelfDeclaration step = new WriteSelfDeclaration(typeDeclaration);
 
         // when
         step.execute(builder);
@@ -59,8 +59,8 @@ class WriteSelfDeclarationTest {
     @Test
     void interface_offsets_start_at_6() {
         // given
-        ClassDefinition classDefinition = ClassDefinition.create(SELF_TYPE, SUPER_TYPE, FOO_TYPE, BAR_TYPE);
-        WriteSelfDeclaration step = new WriteSelfDeclaration(classDefinition);
+        TypeDeclaration typeDeclaration = TypeDeclaration.create(SELF_TYPE, SUPER_TYPE, FOO_TYPE, BAR_TYPE);
+        WriteSelfDeclaration step = new WriteSelfDeclaration(typeDeclaration);
 
         // when
         step.execute(builder);

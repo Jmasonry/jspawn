@@ -1,7 +1,7 @@
 package org.jmasonry.jvm.compiler;
 
-import org.jmasonry.jvm.Type;
-import org.jmasonry.jvm.dsl.ClassDefinition;
+import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.types.TypeDeclaration;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -11,10 +11,10 @@ final class WriteSelfDeclaration implements CompilationStep {
     private static final short SUPER_CLASS_OFFSET = 4;
     private static final short ACCESS_FLAG = 0x0020;
 
-    private final ClassDefinition definition;
+    private final TypeDeclaration declaration;
 
-    WriteSelfDeclaration(ClassDefinition definition) {
-        this.definition = definition;
+    WriteSelfDeclaration(TypeDeclaration declaration) {
+        this.declaration = declaration;
     }
 
     @Override
@@ -23,7 +23,7 @@ final class WriteSelfDeclaration implements CompilationStep {
         builder.appendTwoBytes(THIS_CLASS_OFFSET);
         builder.appendTwoBytes(SUPER_CLASS_OFFSET);
 
-        List<Type> interfaces = definition.getInterfaces();
+        List<Type> interfaces = declaration.getInterfaces();
         builder.appendTwoBytes(interfaces.size());
         IntStream.range(0, interfaces.size())
                 .map(this::calculateInterfaceOffset)
