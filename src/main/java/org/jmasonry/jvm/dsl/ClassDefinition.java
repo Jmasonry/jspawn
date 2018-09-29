@@ -1,6 +1,6 @@
 package org.jmasonry.jvm.dsl;
 
-import org.jmasonry.jvm.Type;
+import org.jmasonry.jvm.types.Type;
 
 import java.util.Arrays;
 import java.util.List;

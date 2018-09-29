@@ -1,7 +1,7 @@
 package org.jmasonry.jvm.compiler;
 
-import org.jmasonry.jvm.Type;
 import org.jmasonry.jvm.dsl.ClassDefinition;
+import org.jmasonry.jvm.types.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;

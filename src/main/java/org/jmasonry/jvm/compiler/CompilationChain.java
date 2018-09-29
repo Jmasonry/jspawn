@@ -1,9 +1,9 @@
 package org.jmasonry.jvm.compiler;
 
-import org.jmasonry.jvm.Type;
 import org.jmasonry.jvm.classfile.ClassFileVersion;
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
 import org.jmasonry.jvm.dsl.ClassDefinition;
+import org.jmasonry.jvm.types.Type;
 
 import java.util.Arrays;
 import java.util.List;

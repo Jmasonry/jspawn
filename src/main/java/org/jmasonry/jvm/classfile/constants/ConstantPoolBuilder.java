@@ -1,6 +1,7 @@
 package org.jmasonry.jvm.classfile.constants;
 
-import org.jmasonry.jvm.Type;
+
+import org.jmasonry.jvm.types.Type;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public final class ConstantPoolBuilder {
     }
 
     public short appendClass(Type type) {
-        String typeName = type.getName().replace('.', '/');
+        String typeName = type.getInternalName();
         var nameIndex = appendUTF8(typeName);
 
         var constant = classConst(nameIndex);

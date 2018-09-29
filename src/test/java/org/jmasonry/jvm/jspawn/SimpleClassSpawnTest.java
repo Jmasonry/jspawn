@@ -1,7 +1,7 @@
 package org.jmasonry.jvm.jspawn;
 
-import org.jmasonry.jvm.Type;
 import org.jmasonry.jvm.dsl.ClassDefinition;
+import org.jmasonry.jvm.types.Type;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
