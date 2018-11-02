@@ -5,7 +5,7 @@ final class ConstantFactory {
         return new UTF8Constant(string);
     }
 
-    static ClassConstant classConst(short nameIndex) {
+    static ClassConstant classConst(int nameIndex) {
         return new ClassConstant(nameIndex);
     }
 }

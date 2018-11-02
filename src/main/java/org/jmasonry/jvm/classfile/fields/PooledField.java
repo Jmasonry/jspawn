@@ -3,11 +3,11 @@ package org.jmasonry.jvm.classfile.fields;
 import org.jmasonry.jvm.compiler.CompilationUnitBuilder;
 
 public class PooledField {
-    private static final short ACCESS_FLAG = FieldAccess.mask(FieldAccess.PRIVATE, FieldAccess.FINAL);
-    private final short nameIndex;
-    private final short typeIndex;
+    private static final int ACCESS_FLAG = FieldAccess.mask(FieldAccess.PRIVATE, FieldAccess.FINAL);
+    private final int nameIndex;
+    private final int typeIndex;
 
-    PooledField(short nameIndex, short typeIndex) {
+    PooledField(int nameIndex, int typeIndex) {
         this.nameIndex = nameIndex;
         this.typeIndex = typeIndex;
     }

@@ -10,19 +10,19 @@ import static org.jmasonry.jvm.classfile.constants.ConstantFactory.classConst;
 import static org.jmasonry.jvm.classfile.constants.ConstantFactory.utf8Const;
 
 public final class ConstantPoolBuilder {
-    private final Map<Constant, Short> cache = new LinkedHashMap<>();
+    private final Map<Constant, Integer> cache = new LinkedHashMap<>();
 
-    public short appendUTF8(String string) {
+    public int appendUTF8(String string) {
         var constant = utf8Const(string);
         return getOrCreate(constant);
     }
 
-    public short appendDescriptor(Type type) {
+    public int appendDescriptor(Type type) {
         String descriptor = type.getDescriptor();
         return appendUTF8(descriptor);
     }
 
-    public short appendClass(Type type) {
+    public int appendClass(Type type) {
         String typeName = type.getInternalName();
         var nameIndex = appendUTF8(typeName);
 
@@ -31,18 +31,18 @@ public final class ConstantPoolBuilder {
     }
 
     public ConstantPool build() {
-        var constants = new LinkedHashMap<Short, Constant>();
+        var constants = new LinkedHashMap<Integer, Constant>();
         for (var entry : cache.entrySet()) {
             constants.put(entry.getValue(), entry.getKey());
         }
         return new ConstantPool(constants);
     }
 
-    private Short getOrCreate(Constant constant) {
+    private Integer getOrCreate(Constant constant) {
         return cache.computeIfAbsent(constant, k -> offset());
     }
 
-    private short offset() {
-        return (short) (cache.size() + 1);
+    private int offset() {
+        return cache.size() + 1;
     }
 }
