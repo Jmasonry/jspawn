@@ -5,9 +5,9 @@ import org.jmasonry.jvm.compiler.CompilationUnitBuilder;
 import java.util.Objects;
 
 final class ClassConstant implements Constant {
-    private final short nameIndex;
+    private final int nameIndex;
 
-    ClassConstant(short nameIndex) {
+    ClassConstant(int nameIndex) {
         this.nameIndex = nameIndex;
     }
 

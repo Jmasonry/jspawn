@@ -5,14 +5,14 @@ enum FieldAccess {
     FINAL(0x0010),
     ;
 
-    private final short mask;
+    private final int mask;
 
     FieldAccess(int mask) {
-        this.mask = (short) mask;
+        this.mask = mask;
     }
 
-    static short mask(FieldAccess... accessModes) {
-        short mask = 0;
+    static int mask(FieldAccess... accessModes) {
+        int mask = 0;
         for (FieldAccess accessMode : accessModes) {
             mask |= accessMode.mask;
         }

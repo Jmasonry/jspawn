@@ -7,12 +7,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class ConstantPool implements Iterable<Constant> {
-    private final Map<Short, Constant> pool;
+    private final Map<Integer, Constant> pool;
 
-    ConstantPool(Map<Short, Constant> pool) {this.pool = Collections.unmodifiableMap(pool);}
+    ConstantPool(Map<Integer, Constant> pool) {this.pool = Collections.unmodifiableMap(pool);}
 
-    private short getSize() {
-        return (short) pool.size();
+    private int getSize() {
+        return pool.size();
     }
 
     @Override

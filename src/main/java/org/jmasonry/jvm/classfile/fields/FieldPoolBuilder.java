@@ -15,8 +15,8 @@ class FieldPoolBuilder {
     }
 
     void add(FieldDeclaration field) {
-        short nameIndex = constants.appendUTF8(field.getName());
-        short typeIndex = constants.appendDescriptor(field.getType());
+        int nameIndex = constants.appendUTF8(field.getName());
+        int typeIndex = constants.appendDescriptor(field.getType());
 
         PooledField pooledField = new PooledField(nameIndex, typeIndex);
         fields.add(pooledField);
