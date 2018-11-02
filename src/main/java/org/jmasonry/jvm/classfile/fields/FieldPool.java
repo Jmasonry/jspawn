@@ -13,7 +13,7 @@ public class FieldPool implements Iterable<PooledField> {
         this.fields = Collections.unmodifiableList(fields);
     }
 
-    public short getSize() {
+    private short getSize() {
         return (short) fields.size();
     }
 

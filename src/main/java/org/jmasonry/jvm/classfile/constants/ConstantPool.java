@@ -11,7 +11,7 @@ public final class ConstantPool implements Iterable<Constant> {
 
     ConstantPool(Map<Short, Constant> pool) {this.pool = Collections.unmodifiableMap(pool);}
 
-    public short getSize() {
+    private short getSize() {
         return (short) pool.size();
     }
 

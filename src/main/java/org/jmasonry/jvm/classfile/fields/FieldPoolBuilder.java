@@ -6,15 +6,15 @@ import org.jmasonry.jvm.types.FieldDeclaration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FieldPoolBuilder {
+class FieldPoolBuilder {
     private final ConstantPoolBuilder constants;
     private final List<PooledField> fields = new ArrayList<>();
 
-    public FieldPoolBuilder(ConstantPoolBuilder constants) {
+    FieldPoolBuilder(ConstantPoolBuilder constants) {
         this.constants = constants;
     }
 
-    public void add(FieldDeclaration field) {
+    void add(FieldDeclaration field) {
         short nameIndex = constants.appendUTF8(field.getName());
         short typeIndex = constants.appendDescriptor(field.getType());
 
@@ -22,7 +22,7 @@ public class FieldPoolBuilder {
         fields.add(pooledField);
     }
 
-    public FieldPool build() {
+    FieldPool build() {
         return new FieldPool(fields);
     }
 }
