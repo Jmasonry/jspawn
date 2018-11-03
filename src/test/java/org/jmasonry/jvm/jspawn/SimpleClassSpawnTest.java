@@ -64,6 +64,22 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
         assertThat(declaredField.getType()).isEqualTo(Integer.class);
     }
 
+    @Test
+    void spawns_class_with_default_constructor() throws ReflectiveOperationException {
+        // given
+        Type superClass = Type.of(Foo.class);
+        TypeDeclaration declaration = create(SELF_TYPE, superClass);
+        MethodDefinition constructorDefinition = defaultConstructor(superClass);
+        TypeDefinition definition = TypeDefinition.of(declaration, emptyList(), singletonList(constructorDefinition));
+        Class<?> spawned = nest.spawn(definition);
+
+        // when
+        Object instance = spawned.getDeclaredConstructor().newInstance();
+
+        // then
+        assertThat(instance).isInstanceOf(Foo.class);
+    }
+
     // must be public
     public interface IFace {}
 
