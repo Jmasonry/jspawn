@@ -1,7 +1,7 @@
 package org.jmasonry.jvm.types;
 
 
-public class FieldDeclaration {
+public final class FieldDeclaration {
     private final String name;
     private final Type type;
 

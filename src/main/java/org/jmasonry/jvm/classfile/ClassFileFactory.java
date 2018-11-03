@@ -20,8 +20,9 @@ public final class ClassFileFactory {
     }
 
     public ClassFile create(TypeDefinition typeDefinition) {
-        ConstantPoolBuilder constants = new ConstantPoolBuilder();
-        ClassFileHeader header = createHeader(constants, typeDefinition.getDeclaration());
+        var constants = new ConstantPoolBuilder();
+
+        var header = createHeader(constants, typeDefinition.getDeclaration());
         var fields = createFields(constants, typeDefinition.getFields());
         var methods = createMethods(constants, typeDefinition.getMethods());
 
@@ -29,18 +30,18 @@ public final class ClassFileFactory {
     }
 
     private ClassFileHeader createHeader(ConstantPoolBuilder constants, TypeDeclaration declaration) {
-        int accessFlags = 0x0020;
-        int thisClassIndex = constants.appendClass(declaration.getSelfType());
-        int superClassIndex = constants.appendClass(declaration.getSuperClass());
+        var accessFlags = ClassAccess.mask(ClassAccess.PUBLIC, ClassAccess.SUPER);
+        var thisClassIndex = constants.appendClass(declaration.getSelfType());
+        var superClassIndex = constants.appendClass(declaration.getSuperClass());
 
-        int[] interfaceIndexes = declaration.getInterfaces().stream()
+        var interfaceIndexes = declaration.getInterfaces().stream()
                 .mapToInt(constants::appendClass)
                 .toArray();
 
         return new ClassFileHeader(accessFlags, thisClassIndex, superClassIndex, interfaceIndexes);
     }
 
-    private static FieldPool createFields(ConstantPoolBuilder constants, List<FieldDeclaration> fields) {
+    private FieldPool createFields(ConstantPoolBuilder constants, List<FieldDeclaration> fields) {
         var pool = new FieldPoolBuilder(constants);
         for (FieldDeclaration field : fields) {
             pool.add(field);
@@ -48,7 +49,7 @@ public final class ClassFileFactory {
         return pool.build();
     }
 
-    private static MethodPool createMethods(ConstantPoolBuilder constants, List<MethodDefinition> methods) {
+    private MethodPool createMethods(ConstantPoolBuilder constants, List<MethodDefinition> methods) {
         var pool = new MethodPoolBuilder(constants);
         for (var method : methods) {
             pool.add(method);
