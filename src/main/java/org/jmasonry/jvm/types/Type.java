@@ -9,6 +9,8 @@ public interface Type {
         return new DefaultType(name);
     }
 
+    static Type unit() {return new Unit();}
+
     String getName();
 
     default String getDescriptor() {
