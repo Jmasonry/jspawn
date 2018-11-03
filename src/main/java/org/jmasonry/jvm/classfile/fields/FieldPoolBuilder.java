@@ -6,23 +6,27 @@ import org.jmasonry.jvm.types.FieldDeclaration;
 import java.util.ArrayList;
 import java.util.List;
 
-class FieldPoolBuilder {
+public final class FieldPoolBuilder {
     private final ConstantPoolBuilder constants;
     private final List<PooledField> fields = new ArrayList<>();
 
-    FieldPoolBuilder(ConstantPoolBuilder constants) {
+    public FieldPoolBuilder(ConstantPoolBuilder constants) {
         this.constants = constants;
     }
 
-    void add(FieldDeclaration field) {
-        int nameIndex = constants.appendUTF8(field.getName());
-        int typeIndex = constants.appendDescriptor(field.getType());
-
-        PooledField pooledField = new PooledField(nameIndex, typeIndex);
+    public void add(FieldDeclaration field) {
+        PooledField pooledField = create(field);
         fields.add(pooledField);
     }
 
-    FieldPool build() {
+    private PooledField create(FieldDeclaration field) {
+        var nameIndex = constants.appendUTF8(field.getName());
+        var typeIndex = constants.appendUTF8(field.getType().getDescriptor());
+
+        return new PooledField(nameIndex, typeIndex);
+    }
+
+    public FieldPool build() {
         return new FieldPool(fields);
     }
 }

@@ -2,9 +2,12 @@ package org.jmasonry.jvm.classfile;
 
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
 import org.jmasonry.jvm.classfile.fields.FieldPool;
-import org.jmasonry.jvm.classfile.fields.FieldPoolFactory;
+import org.jmasonry.jvm.classfile.fields.FieldPoolBuilder;
+import org.jmasonry.jvm.types.FieldDeclaration;
 import org.jmasonry.jvm.types.TypeDeclaration;
 import org.jmasonry.jvm.types.TypeDefinition;
+
+import java.util.List;
 
 public final class ClassFileFactory {
     private final ClassFileVersion version;
@@ -16,8 +19,7 @@ public final class ClassFileFactory {
     public ClassFile create(TypeDefinition typeDefinition) {
         ConstantPoolBuilder constants = new ConstantPoolBuilder();
         ClassFileHeader header = createHeader(constants, typeDefinition.getDeclaration());
-        FieldPoolFactory fieldPoolFactory = new FieldPoolFactory(constants);
-        FieldPool fields = fieldPoolFactory.create(typeDefinition.getFields());
+        var fields = createFields(constants, typeDefinition.getFields());
 
         return new ClassFile(version, header, constants.build(), fields);
     }
@@ -32,5 +34,13 @@ public final class ClassFileFactory {
                 .toArray();
 
         return new ClassFileHeader(accessFlags, thisClassIndex, superClassIndex, interfaceIndexes);
+    }
+
+    private static FieldPool createFields(ConstantPoolBuilder constants, List<FieldDeclaration> fields) {
+        var pool = new FieldPoolBuilder(constants);
+        for (FieldDeclaration field : fields) {
+            pool.add(field);
+        }
+        return pool.build();
     }
 }
