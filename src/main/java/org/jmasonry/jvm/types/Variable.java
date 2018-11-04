@@ -1,11 +1,10 @@
 package org.jmasonry.jvm.types;
 
-
-public final class FieldDeclaration {
+public final class Variable {
     private final String name;
     private final Type type;
 
-    public FieldDeclaration(String name, Type type) {
+    public Variable(String name, Type type) {
         this.name = name;
         this.type = type;
     }

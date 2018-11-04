@@ -21,7 +21,7 @@ final class ClassFileHeader {
         builder.appendTwoBytes(superClassIndex);
 
         builder.appendTwoBytes(interfaceIndexes.length);
-        for (int interfaceIndex : interfaceIndexes) {
+        for (var interfaceIndex : interfaceIndexes) {
             builder.appendTwoBytes(interfaceIndex);
         }
     }

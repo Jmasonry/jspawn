@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class FieldPool implements Iterable<PooledField> {
+public final class FieldPool implements Iterable<PooledField> {
     private final List<PooledField> fields;
 
     FieldPool(List<PooledField> fields) {

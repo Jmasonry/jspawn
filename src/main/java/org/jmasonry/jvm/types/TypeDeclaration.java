@@ -19,6 +19,10 @@ public final class TypeDeclaration {
         return new TypeDeclaration(selfType, superClass, Arrays.asList(interfaces));
     }
 
+    public String getName() {
+        return selfType.getName();
+    }
+
     public Type getSelfType() {
         return selfType;
     }

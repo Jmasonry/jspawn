@@ -1,13 +1,15 @@
 package org.jmasonry.jvm.types;
 
 public interface Type {
-    static Type of(java.lang.reflect.Type type) {
-        return type::getTypeName;
+    static Type of(Class<?> type) {
+        return new DefaultType(type.getTypeName());
     }
 
     static Type of(String name) {
-        return () -> name;
+        return new DefaultType(name);
     }
+
+    static Type unit() {return new Unit();}
 
     String getName();
 

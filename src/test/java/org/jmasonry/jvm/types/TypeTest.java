@@ -12,14 +12,14 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class TypeTest {
     private static Stream<Arguments> type_descriptors() {
         return Stream.of(
-                arguments(Type.of("byte"), "B"),
-                arguments(Type.of("short"), "S"),
-                arguments(Type.of("int"), "I"),
-                arguments(Type.of("long"), "J"),
-                arguments(Type.of("float"), "F"),
-                arguments(Type.of("double"), "D"),
-                arguments(Type.of("char"), "C"),
-                arguments(Type.of("boolean"), "Z"),
+                arguments(Type.of(byte.class), "B"),
+                arguments(Type.of(short.class), "S"),
+                arguments(Type.of(int.class), "I"),
+                arguments(Type.of(long.class), "J"),
+                arguments(Type.of(float.class), "F"),
+                arguments(Type.of(double.class), "D"),
+                arguments(Type.of(char.class), "C"),
+                arguments(Type.of(boolean.class), "Z"),
                 arguments(Type.of(Object.class), "Ljava/lang/Object;"),
                 arguments(Type.of(int[].class), "[I"),
                 arguments(Type.of(int[][].class), "[[I"),
@@ -49,5 +49,4 @@ class TypeTest {
 
         assertThat(descriptor).isEqualTo(expectedDescriptor);
     }
-
 }

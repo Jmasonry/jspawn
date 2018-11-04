@@ -9,8 +9,8 @@ class SpawnNest extends ClassLoader {
     SpawnNest(Compiler compiler) {this.compiler = compiler;}
 
     Class<?> spawn(TypeDefinition type) {
-        var bytes = new byte[0];
-        bytes = compiler.compile(type);
-        return defineClass(type.getName(), bytes, 0, bytes.length);
+        var bytes = compiler.compile(type);
+        String typeName = type.getDeclaration().getName();
+        return defineClass(typeName, bytes, 0, bytes.length);
     }
 }

@@ -8,4 +8,12 @@ final class ConstantFactory {
     static ClassConstant classConst(int nameIndex) {
         return new ClassConstant(nameIndex);
     }
+
+    static Constant nameAndType(int nameIndex, int descriptorIndex) {
+        return new NameAndType(nameIndex, descriptorIndex);
+    }
+
+    static Constant methodRef(int classIndex, int nameAndTypeIndex) {
+        return new MethodRef(classIndex, nameAndTypeIndex);
+    }
 }
