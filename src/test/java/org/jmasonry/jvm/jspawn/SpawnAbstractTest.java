@@ -2,11 +2,7 @@ package org.jmasonry.jvm.jspawn;
 
 import org.jmasonry.jvm.compiler.Compiler;
 import org.jmasonry.jvm.compiler.DefaultCompiler;
-import org.jmasonry.jvm.types.MethodDeclaration;
-import org.jmasonry.jvm.types.MethodDefinition;
-import org.jmasonry.jvm.types.MethodParameters;
-import org.jmasonry.jvm.types.Type;
-import org.jmasonry.jvm.types.Variable;
+import org.jmasonry.jvm.types.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,12 +16,12 @@ abstract class SpawnAbstractTest {
     final SpawnNest nest = new SpawnNest(compiler);
 
     MethodDefinition defaultConstructor(Type superClass) {
-        MethodDeclaration constructorDeclaration = new MethodDeclaration();
+        MethodDeclaration constructorDeclaration = new MethodDeclaration("<init>");
         return new MethodDefinition(constructorDeclaration,
                 new MethodParameters(Collections.singletonList(new Variable("this", SELF_TYPE))),
                 Arrays.asList(
                         loadLocal("this", SELF_TYPE),
-                        call(superClass, new MethodDeclaration()),
+                        call(superClass, new MethodDeclaration("<init>")),
                         returnTyped(Type.unit())
                 ));
     }
