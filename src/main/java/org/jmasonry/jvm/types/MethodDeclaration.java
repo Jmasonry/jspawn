@@ -7,6 +7,10 @@ public final class MethodDeclaration {
         this.name = name;
     }
 
+    public static MethodDeclaration constructor() {
+        return new MethodDeclaration("<init>");
+    }
+
     public String getName() {
         return name;
     }
