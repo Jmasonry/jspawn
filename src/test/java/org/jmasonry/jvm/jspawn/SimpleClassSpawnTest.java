@@ -1,9 +1,12 @@
 package org.jmasonry.jvm.jspawn;
 
 import org.jmasonry.jvm.types.*;
+import org.jmasonry.vm.stack.instructions.StackInstructions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Collections;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -55,6 +58,24 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
         // then
         Field declaredField = spawned.getDeclaredField(fieldName);
         assertThat(declaredField.getType()).isEqualTo(fieldType);
+    }
+
+    @Test
+    void spawns_class_with_a_method() throws ReflectiveOperationException {
+        // given
+        String methodName = "foo";
+        MethodDefinition fooDefinition = new MethodDefinition(
+                new MethodDeclaration(methodName),
+                new MethodParameters(Collections.singletonList(new Variable("this", SELF_TYPE))),
+                Collections.singletonList(StackInstructions.returnTyped(Type.unit())));
+        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(fooDefinition));
+
+        // when
+        Class<?> spawned = nest.spawn(definition);
+
+        // then
+        Method declaredMethod = spawned.getDeclaredMethod(methodName);
+        assertThat(declaredMethod).isNotNull();
     }
 
     @Test
