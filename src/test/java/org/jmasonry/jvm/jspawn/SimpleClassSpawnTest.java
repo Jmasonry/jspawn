@@ -1,10 +1,6 @@
 package org.jmasonry.jvm.jspawn;
 
-import org.jmasonry.jvm.types.FieldDeclaration;
-import org.jmasonry.jvm.types.MethodDefinition;
-import org.jmasonry.jvm.types.Type;
-import org.jmasonry.jvm.types.TypeDeclaration;
-import org.jmasonry.jvm.types.TypeDefinition;
+import org.jmasonry.jvm.types.*;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -15,16 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.jmasonry.jvm.types.TypeDeclaration.create;
 
 class SimpleClassSpawnTest extends SpawnAbstractTest {
-    private static final TypeDeclaration TYPE_DECLARATION = TypeDeclaration.create(SELF_TYPE, Type.of(Object.class));
+    private static final Type PARENT_TYPE = Type.of(Foo.class);
+    private static final TypeDeclaration TYPE_DECLARATION = TypeDeclaration.create(SELF_TYPE, PARENT_TYPE);
 
     @Test
     void spawns_a_class() {
         // given
-        Type superClass = Type.of(Foo.class);
-        TypeDeclaration declaration = TypeDeclaration.create(SELF_TYPE, superClass);
-        MethodDefinition defaultConstructor = defaultConstructor(superClass);
-
-        TypeDefinition definition = TypeDefinition.of(declaration, emptyList(), singletonList(defaultConstructor));
+        MethodDefinition defaultConstructor = defaultConstructor(PARENT_TYPE);
+        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(defaultConstructor));
 
         // when
         Class<?> spawned = nest.spawn(definition);
@@ -36,8 +30,7 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
     @Test
     void spawns_implementation() {
         // given
-        Type superClass = Type.of(Object.class);
-        TypeDeclaration declaration = create(SELF_TYPE, superClass, Type.of(IFace.class), Type.of(OtherIFace.class));
+        TypeDeclaration declaration = create(SELF_TYPE, PARENT_TYPE, Type.of(IFace.class), Type.of(OtherIFace.class));
         TypeDefinition definition = TypeDefinition.of(declaration);
 
         // when
@@ -52,8 +45,8 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
     void spawns_class_with_a_field() throws NoSuchFieldException {
         // given
         String fieldName = "foo";
-        Type fieldType = Type.of(Integer.class);
-        FieldDeclaration field = new FieldDeclaration(fieldName, fieldType);
+        Class<Integer> fieldType = Integer.class;
+        FieldDeclaration field = new FieldDeclaration(fieldName, Type.of(fieldType));
         TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, singletonList(field), emptyList());
 
         // when
@@ -61,16 +54,14 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
 
         // then
         Field declaredField = spawned.getDeclaredField(fieldName);
-        assertThat(declaredField.getType()).isEqualTo(Integer.class);
+        assertThat(declaredField.getType()).isEqualTo(fieldType);
     }
 
     @Test
     void spawns_class_with_default_constructor() throws ReflectiveOperationException {
         // given
-        Type superClass = Type.of(Foo.class);
-        TypeDeclaration declaration = create(SELF_TYPE, superClass);
-        MethodDefinition constructorDefinition = defaultConstructor(superClass);
-        TypeDefinition definition = TypeDefinition.of(declaration, emptyList(), singletonList(constructorDefinition));
+        MethodDefinition constructorDefinition = defaultConstructor(PARENT_TYPE);
+        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(constructorDefinition));
         Class<?> spawned = nest.spawn(definition);
 
         // when
