@@ -1,5 +1,8 @@
 package org.jmasonry.jvm.jspawn;
 
+import org.jmasonry.jvm.jspawn.types.Foo;
+import org.jmasonry.jvm.jspawn.types.IFace;
+import org.jmasonry.jvm.jspawn.types.OtherIFace;
 import org.jmasonry.jvm.types.FieldDeclaration;
 import org.jmasonry.jvm.types.Type;
 import org.jmasonry.jvm.types.TypeDeclaration;
@@ -29,7 +32,7 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
         Class<?> spawned = nest.spawn(definition);
 
         // then
-        assertThat(Declarations.Foo.class).isAssignableFrom(spawned);
+        assertThat(Foo.class).isAssignableFrom(spawned);
     }
 
     @Test
@@ -87,11 +90,7 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
         Object instance = spawned.getDeclaredConstructor().newInstance();
 
         // then
-        assertThat(instance).isInstanceOf(Declarations.Foo.class);
+        assertThat(instance).isInstanceOf(Foo.class);
     }
 
-    // must be public
-    public interface IFace {}
-
-    public interface OtherIFace {}
 }

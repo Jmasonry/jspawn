@@ -1,5 +1,6 @@
 package org.jmasonry.jvm.jspawn;
 
+import org.jmasonry.jvm.jspawn.types.Foo;
 import org.jmasonry.jvm.types.*;
 import org.jmasonry.vm.stack.instructions.StackInstruction;
 
@@ -37,11 +38,5 @@ final class Declarations {
     static MethodDefinition methodDef(String name, Type returnedType, List<StackInstruction> instructions) {
         MethodDeclaration methodDeclaration = new MethodDeclaration(name, returnedType);
         return new MethodDefinition(methodDeclaration, THIS_PARAMETER, instructions);
-    }
-
-    // all must be public
-    public static class Foo {
-        public Foo() {
-        }
     }
 }
