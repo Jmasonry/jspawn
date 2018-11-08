@@ -14,9 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.jmasonry.jvm.types.TypeDeclaration.create;
 
 class SimpleClassSpawnTest extends SpawnAbstractTest {
-    private static final Type PARENT_TYPE = Type.of(Foo.class);
-    private static final TypeDeclaration TYPE_DECLARATION = TypeDeclaration.create(SELF_TYPE, PARENT_TYPE);
-
     @Test
     void spawns_a_class() {
         // given
@@ -96,10 +93,4 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
     public interface IFace {}
 
     public interface OtherIFace {}
-
-    // all must be public
-    public static class Foo {
-        public Foo() {
-        }
-    }
 }
