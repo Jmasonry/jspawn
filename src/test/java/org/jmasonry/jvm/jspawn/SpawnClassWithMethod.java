@@ -1,41 +1,40 @@
 package org.jmasonry.jvm.jspawn;
 
-import org.jmasonry.jvm.types.*;
+import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.types.TypeDefinition;
+import org.jmasonry.vm.stack.instructions.StackInstruction;
 import org.jmasonry.vm.stack.instructions.StackInstructions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jmasonry.jvm.jspawn.Declarations.typeWithSingleMethod;
 
 final class SpawnClassWithMethod extends SpawnAbstractTest {
     private static final String METHOD_NAME = "foo";
-    private static final Variable THIS = new Variable("this", SELF_TYPE);
-    private static final MethodParameters THIS_PARAMETER = new MethodParameters(Collections.singletonList(THIS));
+
 
     @Test
     void spawn_method_with_int_return_type() throws ReflectiveOperationException {
         // given
         Integer value = 0xFFFFFF;
         Class<?> returnClass = int.class;
+        Type returnedType = Type.of(returnClass);
 
-        MethodDeclaration methodDeclaration = new MethodDeclaration(METHOD_NAME, Type.of(returnClass));
-        MethodDefinition methodDef = new MethodDefinition(methodDeclaration, THIS_PARAMETER, Arrays.asList(
+        List<StackInstruction> instructions = Arrays.asList(
                 StackInstructions.push(value),
-                StackInstructions.returnTyped(Type.of(returnClass))));
+                StackInstructions.returnTyped(returnedType));
 
-        TypeDefinition typeDef = TypeDefinition.of(TYPE_DECLARATION, emptyList(), Arrays.asList(
-                defaultConstructor(PARENT_TYPE),
-                methodDef
-        ));
+        TypeDefinition typeDef = typeWithSingleMethod(METHOD_NAME, returnedType, instructions);
+
         // when
         Class<?> spawned = nest.spawn(typeDef);
 
         // then
-        Method declaredMethod = spawned.getDeclaredMethod(METHOD_NAME, returnClass);
+        Method declaredMethod = spawned.getDeclaredMethod(METHOD_NAME);
         Object instance = spawned.getConstructor().newInstance();
 
         Object result = declaredMethod.invoke(instance);

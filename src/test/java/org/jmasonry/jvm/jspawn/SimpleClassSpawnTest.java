@@ -1,30 +1,35 @@
 package org.jmasonry.jvm.jspawn;
 
-import org.jmasonry.jvm.types.*;
+import org.jmasonry.jvm.types.FieldDeclaration;
+import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.types.TypeDeclaration;
+import org.jmasonry.jvm.types.TypeDefinition;
+import org.jmasonry.vm.stack.instructions.StackInstruction;
 import org.jmasonry.vm.stack.instructions.StackInstructions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jmasonry.jvm.jspawn.Declarations.*;
 import static org.jmasonry.jvm.types.TypeDeclaration.create;
 
 class SimpleClassSpawnTest extends SpawnAbstractTest {
     @Test
     void spawns_a_class() {
         // given
-        MethodDefinition defaultConstructor = defaultConstructor(PARENT_TYPE);
-        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(defaultConstructor));
+        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), emptyList());
 
         // when
         Class<?> spawned = nest.spawn(definition);
 
         // then
-        assertThat(Foo.class).isAssignableFrom(spawned);
+        assertThat(Declarations.Foo.class).isAssignableFrom(spawned);
     }
 
     @Test
@@ -61,11 +66,8 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
     void spawns_class_with_a_method() throws ReflectiveOperationException {
         // given
         String methodName = "foo";
-        MethodDefinition fooDefinition = new MethodDefinition(
-                new MethodDeclaration(methodName, Type.unit()),
-                new MethodParameters(Collections.singletonList(new Variable("this", SELF_TYPE))),
-                Collections.singletonList(StackInstructions.returnTyped(Type.unit())));
-        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(fooDefinition));
+        List<StackInstruction> instructions = Collections.singletonList(StackInstructions.returnTyped(Type.unit()));
+        TypeDefinition definition = Declarations.typeWithSingleMethod(methodName, Type.unit(), instructions);
 
         // when
         Class<?> spawned = nest.spawn(definition);
@@ -78,15 +80,14 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
     @Test
     void spawns_class_with_default_constructor() throws ReflectiveOperationException {
         // given
-        MethodDefinition constructorDefinition = defaultConstructor(PARENT_TYPE);
-        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(constructorDefinition));
+        TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(constructor()));
         Class<?> spawned = nest.spawn(definition);
 
         // when
         Object instance = spawned.getDeclaredConstructor().newInstance();
 
         // then
-        assertThat(instance).isInstanceOf(Foo.class);
+        assertThat(instance).isInstanceOf(Declarations.Foo.class);
     }
 
     // must be public
