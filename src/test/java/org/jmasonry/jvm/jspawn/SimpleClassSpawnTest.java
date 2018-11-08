@@ -62,7 +62,7 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
         // given
         String methodName = "foo";
         MethodDefinition fooDefinition = new MethodDefinition(
-                new MethodDeclaration(methodName),
+                new MethodDeclaration(methodName, Type.unit()),
                 new MethodParameters(Collections.singletonList(new Variable("this", SELF_TYPE))),
                 Collections.singletonList(StackInstructions.returnTyped(Type.unit())));
         TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(fooDefinition));
