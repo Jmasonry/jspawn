@@ -13,13 +13,18 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
 
     private final Bytecode bytecode = new Bytecode();
 
+    BytecodeBuilder(ConstantPoolBuilder constants, LocalVariables localVariables) {
+        this.constants = constants;
+        this.localVariables = localVariables;
+    }
+
     Bytecode build() {
         return bytecode;
     }
 
-    BytecodeBuilder(ConstantPoolBuilder constants, LocalVariables localVariables) {
-        this.constants = constants;
-        this.localVariables = localVariables;
+    @Override
+    public void push(int value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -13,6 +13,8 @@ public interface StackInstruction {
             return new AggregatedInterpreter(interpreters);
         }
 
+        void push(int value);
+
         void loadVariable(String name, Type type);
 
         void call(Type methodOwner, MethodDeclaration methodDeclaration);

@@ -13,6 +13,11 @@ final class StackSizeTracker implements StackInstruction.Interpreter {
     }
 
     @Override
+    public void push(int value) {
+        extendBy(1);
+    }
+
+    @Override
     public void loadVariable(String name, Type type) {
         extendBy(1);
     }
