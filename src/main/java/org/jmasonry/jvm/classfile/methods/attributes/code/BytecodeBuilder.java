@@ -1,6 +1,7 @@
 package org.jmasonry.jvm.classfile.methods.attributes.code;
 
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
+import org.jmasonry.jvm.instructions.JvmInstructions;
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
 import org.jmasonry.vm.stack.instructions.StackInstruction;
@@ -24,7 +25,8 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
 
     @Override
     public void push(int value) {
-        throw new UnsupportedOperationException();
+        int constantIndex = constants.appendInteger(value);
+        bytecode.append(JvmInstructions.LOAD_CONSTANT(constantIndex));
     }
 
     @Override
