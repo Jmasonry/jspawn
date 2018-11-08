@@ -1,7 +1,6 @@
 package org.jmasonry.jvm.classfile.methods.attributes.code;
 
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
-import org.jmasonry.jvm.instructions.JvmInstructions;
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
 import org.jmasonry.vm.stack.instructions.StackInstruction;
@@ -25,24 +24,24 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
 
     @Override
     public void push(int value) {
-        int constantIndex = constants.appendInteger(value);
-        bytecode.append(JvmInstructions.LOAD_CONSTANT(constantIndex));
+        var constantIndex = constants.appendInteger(value);
+        bytecode.append(loadConstant(constantIndex));
     }
 
     @Override
     public void loadVariable(String name, Type type) {
         var localRef = localVariables.indexOf(name);
-        bytecode.append(A_LOAD(localRef));
+        bytecode.append(loadReference(localRef));
     }
 
     @Override
     public void call(Type methodOwner, MethodDeclaration methodDeclaration) {
         var methodRef = constants.appendMethod(methodOwner, methodDeclaration);
-        bytecode.append(INVOKE_SPECIAL(methodRef));
+        bytecode.append(invokeSpecial(methodRef));
     }
 
     @Override
     public void returnTop(Type returnedType) {
-        bytecode.append(RETURN(returnedType));
+        bytecode.append(returnValueOfType(returnedType));
     }
 }
