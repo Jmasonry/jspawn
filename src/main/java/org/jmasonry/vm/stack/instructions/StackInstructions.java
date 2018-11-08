@@ -4,6 +4,10 @@ import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
 
 public final class StackInstructions {
+    public static StackInstruction push(int value) {
+        return new Push(value);
+    }
+
     public static StackInstruction loadLocal(String variable, Type variableType) {
         return new LoadVariable(variable, variableType);
     }

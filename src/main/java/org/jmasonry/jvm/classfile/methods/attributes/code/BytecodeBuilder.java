@@ -13,29 +13,35 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
 
     private final Bytecode bytecode = new Bytecode();
 
-    Bytecode build() {
-        return bytecode;
-    }
-
     BytecodeBuilder(ConstantPoolBuilder constants, LocalVariables localVariables) {
         this.constants = constants;
         this.localVariables = localVariables;
     }
 
+    Bytecode build() {
+        return bytecode;
+    }
+
+    @Override
+    public void push(int value) {
+        var constantIndex = constants.appendInteger(value);
+        bytecode.append(loadConstant(constantIndex));
+    }
+
     @Override
     public void loadVariable(String name, Type type) {
         var localRef = localVariables.indexOf(name);
-        bytecode.append(A_LOAD(localRef));
+        bytecode.append(loadReference(localRef));
     }
 
     @Override
     public void call(Type methodOwner, MethodDeclaration methodDeclaration) {
         var methodRef = constants.appendMethod(methodOwner, methodDeclaration);
-        bytecode.append(INVOKE_SPECIAL(methodRef));
+        bytecode.append(invokeSpecial(methodRef));
     }
 
     @Override
     public void returnTop(Type returnedType) {
-        bytecode.append(RETURN_TOP);
+        bytecode.append(returnValueOfType(returnedType));
     }
 }

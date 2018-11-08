@@ -13,6 +13,13 @@ final class AggregatedInterpreter implements StackInstruction.Interpreter {
     }
 
     @Override
+    public void push(int value) {
+        for (StackInstruction.Interpreter interpreter : interpreters) {
+            interpreter.push(value);
+        }
+    }
+
+    @Override
     public void loadVariable(String name, Type type) {
         for (StackInstruction.Interpreter interpreter : interpreters) {
             interpreter.loadVariable(name, type);

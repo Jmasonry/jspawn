@@ -12,6 +12,11 @@ import static org.jmasonry.jvm.classfile.constants.ConstantFactory.*;
 public final class ConstantPoolBuilder {
     private final Map<Constant, Integer> cache = new LinkedHashMap<>();
 
+    public int appendInteger(int value) {
+        var constant = intConst(value);
+        return getOrCreate(constant);
+    }
+
     public int appendUTF8(String string) {
         var constant = utf8Const(string);
         return getOrCreate(constant);
