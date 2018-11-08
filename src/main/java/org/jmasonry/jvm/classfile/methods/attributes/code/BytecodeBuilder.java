@@ -43,6 +43,6 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
 
     @Override
     public void returnTop(Type returnedType) {
-        bytecode.append(RETURN_TOP);
+        bytecode.append(RETURN(returnedType));
     }
 }
