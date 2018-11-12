@@ -11,6 +11,8 @@ public interface CompilationUnitBuilder {
 
     void appendFourBytes(int fourBytes);
 
+    void appendEightBytes(long fourBytes);
+
     void appendUTF8(String string);
 
     byte[] build();

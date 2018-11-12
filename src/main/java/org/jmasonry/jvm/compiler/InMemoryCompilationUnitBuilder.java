@@ -37,6 +37,16 @@ final class InMemoryCompilationUnitBuilder implements CompilationUnitBuilder {
     }
 
     @Override
+    public void appendEightBytes(long eightBytes) {
+        try {
+            outputStream.writeLong(eightBytes);
+        } catch (IOException e) {
+            throw createException(e);
+        }
+
+    }
+
+    @Override
     public void appendUTF8(String string) {
         try {
             outputStream.writeUTF(string);
