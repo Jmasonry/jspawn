@@ -2,9 +2,10 @@ package org.jmasonry.vm.stack.instructions;
 
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
+import org.jmasonry.vm.values.Value;
 
 public final class StackInstructions {
-    public static StackInstruction push(int value) {
+    public static StackInstruction push(Value value) {
         return new Push(value);
     }
 

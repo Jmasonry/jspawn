@@ -2,6 +2,7 @@ package org.jmasonry.vm.stack.instructions;
 
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
+import org.jmasonry.vm.values.Value;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ final class AggregatedInterpreter implements StackInstruction.Interpreter {
     }
 
     @Override
-    public void push(int value) {
+    public void push(Value operand) {
         for (StackInstruction.Interpreter interpreter : interpreters) {
-            interpreter.push(value);
+            interpreter.push(operand);
         }
     }
 

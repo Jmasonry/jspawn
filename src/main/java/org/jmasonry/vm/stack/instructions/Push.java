@@ -1,14 +1,16 @@
 package org.jmasonry.vm.stack.instructions;
 
-final class Push implements StackInstruction {
-    private final int value;
+import org.jmasonry.vm.values.Value;
 
-    Push(int value) {
-        this.value = value;
+final class Push implements StackInstruction {
+    private final Value operand;
+
+    Push(Value operand) {
+        this.operand = operand;
     }
 
     @Override
     public void interpret(Interpreter interpreter) {
-        interpreter.push(value);
+        interpreter.push(operand);
     }
 }
