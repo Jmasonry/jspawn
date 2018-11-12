@@ -20,4 +20,8 @@ public final class StackInstructions {
    public static StackInstruction returnTyped(Type valueType) {
       return new Return(valueType);
    }
+
+   public static StackInstruction convert(Type sourceType, Type targetType) {
+      return new Convert(sourceType, targetType);
+   }
 }

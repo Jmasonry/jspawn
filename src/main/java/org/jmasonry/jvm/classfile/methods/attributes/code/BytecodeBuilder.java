@@ -1,5 +1,6 @@
 package org.jmasonry.jvm.classfile.methods.attributes.code;
 
+import static org.jmasonry.jvm.instructions.JvmInstructions.convertPrimitives;
 import static org.jmasonry.jvm.instructions.JvmInstructions.invokeSpecial;
 import static org.jmasonry.jvm.instructions.JvmInstructions.loadConstant;
 import static org.jmasonry.jvm.instructions.JvmInstructions.loadReference;
@@ -59,5 +60,10 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
    @Override
    public void returnTop(Type returnedType) {
       bytecode.append(returnValueOfType(returnedType));
+   }
+
+   @Override
+   public void convert(Type sourceType, Type targetType) {
+      bytecode.append(convertPrimitives(sourceType, targetType));
    }
 }

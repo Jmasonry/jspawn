@@ -12,6 +12,7 @@ public final class JvmInstructions {
    public static JvmInstruction returnValueOfType(Type type) {
       switch (type.getDescriptor()) {
          case "B":
+         case "C":
          case "S":
          case "I": return new JvmInstruction(0xac);
          case "J": return new JvmInstruction(0xad);
@@ -40,5 +41,32 @@ public final class JvmInstructions {
 
    public static JvmInstruction loadReference(int value) {
       return new JvmInstruction(0x19, twoBytes(value));
+   }
+
+   public static JvmInstruction convertPrimitives(Type from, Type to) {
+      String conversionDescriptor = from.getDescriptor() + to.getDescriptor();
+      switch (conversionDescriptor) {
+         case "IJ": return new JvmInstruction(0x85);
+         case "IF": return new JvmInstruction(0x86);
+         case "ID": return new JvmInstruction(0x87);
+
+         case "JI": return new JvmInstruction(0x88);
+         case "JF": return new JvmInstruction(0x89);
+         case "JD": return new JvmInstruction(0x8a);
+
+         case "FI": return new JvmInstruction(0x8b);
+         case "FJ": return new JvmInstruction(0x8c);
+         case "FD": return new JvmInstruction(0x8d);
+
+         case "DI": return new JvmInstruction(0x8e);
+         case "DJ": return new JvmInstruction(0x8f);
+         case "DF": return new JvmInstruction(0x90);
+
+         case "IB": return new JvmInstruction(0x91);
+         case "IC": return new JvmInstruction(0x92);
+         case "IS": return new JvmInstruction(0x93);
+
+         default: throw new IllegalArgumentException("Unsupported convesion: " + conversionDescriptor);
+      }
    }
 }

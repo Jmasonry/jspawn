@@ -7,7 +7,7 @@ final class PrecisionMapper implements Value.Mapper<Precision> {
    @Override
    public Precision map(int value) {
       if (value >= Byte.MIN_VALUE && value <= Byte.MAX_VALUE) {
-         return Precision.BYTE;
+         return Precision.ONE_BYTE;
       }
 
       if (value >= Short.MIN_VALUE && value <= Short.MAX_VALUE) {
