@@ -1,23 +1,17 @@
 package org.jmasonry.jvm.types;
 
 public interface Type {
-    static Type of(Class<?> type) {
-        return new DefaultType(type.getTypeName());
-    }
+   static Type of(Class<?> type) { return new DefaultType(type.getTypeName()); }
+   static Type of(String name) { return new DefaultType(name); }
+   static Type unit() {return new Unit();}
 
-    static Type of(String name) {
-        return new DefaultType(name);
-    }
+   String getName();
 
-    static Type unit() {return new Unit();}
+   default String getDescriptor() {
+      return TypeName.toDescriptor(getName());
+   }
 
-    String getName();
-
-    default String getDescriptor() {
-        return TypeName.toDescriptor(getName());
-    }
-
-    default String getInternalName() {
-        return TypeName.toInternalType(getName());
-    }
+   default String getInternalName() {
+      return TypeName.toInternalType(getName());
+   }
 }

@@ -1,33 +1,33 @@
 package org.jmasonry.jvm.instructions;
 
+import java.util.Arrays;
 import org.jmasonry.jvm.compiler.CompilationUnitBuilder;
 
-import java.util.Arrays;
-
 public final class JvmInstruction {
-    private final int opcode;
-    private final Operand[] operands;
-    private final int byteCount;
+   private final int       opcode;
+   private final Operand[] operands;
 
-    JvmInstruction(int opcode, Operand... operands) {
-        this.opcode = opcode;
-        this.operands = operands;
-        byteCount = 1 + Arrays.stream(operands).mapToInt(Operand::byteCount).sum();
-    }
+   private final int byteCount;
 
-    public void write(CompilationUnitBuilder builder) {
-        builder.appendOneByte(opcode);
-        for (Operand operand : operands) {
-            operand.write(builder);
-        }
-    }
+   JvmInstruction(int opcode, Operand... operands) {
+      this.opcode = opcode;
+      this.operands = operands;
+      byteCount = 1 + Arrays.stream(operands).mapToInt(Operand::byteCount).sum();
+   }
 
-    public int byteCount() {
-        return byteCount;
-    }
+   public void write(CompilationUnitBuilder builder) {
+      builder.appendOneByte(opcode);
+      for (Operand operand : operands) {
+         operand.write(builder);
+      }
+   }
 
-    @Override
-    public String toString() {
-        return String.format("0x%s", Integer.toHexString(opcode));
-    }
+   public int byteCount() {
+      return byteCount;
+   }
+
+   @Override
+   public String toString() {
+      return String.format("0x%s", Integer.toHexString(opcode));
+   }
 }

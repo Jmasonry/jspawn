@@ -1,32 +1,32 @@
 package org.jmasonry.jvm.classfile.fields;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
 import org.jmasonry.jvm.types.FieldDeclaration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public final class FieldPoolBuilder {
-    private final ConstantPoolBuilder constants;
-    private final List<PooledField> fields = new ArrayList<>();
+   private final ConstantPoolBuilder constants;
 
-    public FieldPoolBuilder(ConstantPoolBuilder constants) {
-        this.constants = constants;
-    }
+   private final List<PooledField> fields = new ArrayList<>();
 
-    public void add(FieldDeclaration field) {
-        PooledField pooledField = create(field);
-        fields.add(pooledField);
-    }
+   public FieldPoolBuilder(ConstantPoolBuilder constants) {
+      this.constants = constants;
+   }
 
-    private PooledField create(FieldDeclaration field) {
-        var nameIndex = constants.appendUTF8(field.getName());
-        var typeIndex = constants.appendUTF8(field.getType().getDescriptor());
+   public void add(FieldDeclaration field) {
+      PooledField pooledField = create(field);
+      fields.add(pooledField);
+   }
 
-        return new PooledField(nameIndex, typeIndex);
-    }
+   private PooledField create(FieldDeclaration field) {
+      var nameIndex = constants.appendUTF8(field.getName());
+      var typeIndex = constants.appendUTF8(field.getType().getDescriptor());
 
-    public FieldPool build() {
-        return new FieldPool(fields);
-    }
+      return new PooledField(nameIndex, typeIndex);
+   }
+
+   public FieldPool build() {
+      return new FieldPool(fields);
+   }
 }

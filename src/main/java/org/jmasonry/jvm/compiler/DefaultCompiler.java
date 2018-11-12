@@ -6,17 +6,18 @@ import org.jmasonry.jvm.classfile.ClassFileVersion;
 import org.jmasonry.jvm.types.TypeDefinition;
 
 public final class DefaultCompiler implements Compiler {
-    private static final ClassFileVersion version = ClassFileVersion.JAVA_10;
-    private final ClassFileFactory classFileFactory = new ClassFileFactory(version);
+   private static final ClassFileVersion version = ClassFileVersion.JAVA_10;
 
-    @Override
-    public byte[] compile(TypeDefinition type) {
-        CompilationUnitBuilder builder = CompilationUnitBuilder.createInMemory();
+   private final ClassFileFactory classFileFactory = new ClassFileFactory(version);
 
-        ClassFile classFile = classFileFactory.create(type);
-        classFile.write(builder);
+   @Override
+   public byte[] compile(TypeDefinition type) {
+      CompilationUnitBuilder builder = CompilationUnitBuilder.createInMemory();
 
-        return builder.build();
-    }
+      ClassFile classFile = classFileFactory.create(type);
+      classFile.write(builder);
+
+      return builder.build();
+   }
 
 }

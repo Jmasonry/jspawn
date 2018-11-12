@@ -1,26 +1,26 @@
 package org.jmasonry.jvm.classfile.methods.attributes.code;
 
-import org.jmasonry.jvm.instructions.JvmInstruction;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.jmasonry.jvm.instructions.JvmInstruction;
 
 final class Bytecode implements Iterable<JvmInstruction> {
-    private final List<JvmInstruction> instructions = new ArrayList<>();
-    private int byteCount = 0;
+   private final List<JvmInstruction> instructions = new ArrayList<>();
 
-    @Override
-    public Iterator<JvmInstruction> iterator() {
-        return instructions.iterator();
-    }
+   private int byteCount = 0;
 
-    int byteCount() {
-        return byteCount;
-    }
+   @Override
+   public Iterator<JvmInstruction> iterator() {
+      return instructions.iterator();
+   }
 
-    void append(JvmInstruction instruction) {
-        instructions.add(instruction);
-        byteCount += instruction.byteCount();
-    }
+   int byteCount() {
+      return byteCount;
+   }
+
+   void append(JvmInstruction instruction) {
+      instructions.add(instruction);
+      byteCount += instruction.byteCount();
+   }
 }
