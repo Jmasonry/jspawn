@@ -8,20 +8,20 @@ import org.jmasonry.jvm.classfile.methods.attributes.code.CodeFactory;
 import org.jmasonry.jvm.types.MethodDefinition;
 
 public final class MethodAttributesFactory {
-    private final CodeFactory codeFactory;
+   private final CodeFactory codeFactory;
 
-    public MethodAttributesFactory(ConstantPoolBuilder constants) {
-        this.codeFactory = new CodeFactory(constants);
-    }
+   public MethodAttributesFactory(ConstantPoolBuilder constants) {
+      this.codeFactory = new CodeFactory(constants);
+   }
 
-    public AttributePool create(MethodDefinition definition) {
-        var attributes = new AttributePoolBuilder();
-        attributes.append(code(definition));
+   public AttributePool create(MethodDefinition definition) {
+      var attributes = new AttributePoolBuilder();
+      attributes.append(code(definition));
 
-        return attributes.build();
-    }
+      return attributes.build();
+   }
 
-    private Code code(MethodDefinition definition) {
-        return codeFactory.create(definition.getParameters(), definition.getInstructions());
-    }
+   private Code code(MethodDefinition definition) {
+      return codeFactory.create(definition.getParameters(), definition.getInstructions());
+   }
 }
