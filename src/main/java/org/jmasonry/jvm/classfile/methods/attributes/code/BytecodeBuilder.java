@@ -1,9 +1,12 @@
 package org.jmasonry.jvm.classfile.methods.attributes.code;
 
 import org.jmasonry.jvm.classfile.constants.ConstantPoolBuilder;
+import org.jmasonry.jvm.instructions.JvmInstruction;
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.values.Precision;
 import org.jmasonry.vm.stack.instructions.StackInstruction;
+import org.jmasonry.vm.values.Value;
 
 import static org.jmasonry.jvm.instructions.JvmInstructions.*;
 
@@ -23,9 +26,18 @@ final class BytecodeBuilder implements StackInstruction.Interpreter {
     }
 
     @Override
-    public void push(int value) {
-        var constantIndex = constants.appendInteger(value);
-        bytecode.append(loadConstant(constantIndex));
+    public void push(Value operand) {
+        JvmInstruction instruction;
+
+        Precision precision = Precision.of(operand);
+        if (precision.bytes() < 4) {
+            instruction = pushValue(operand);
+        } else {
+            var constantIndex = constants.appendValue(operand);
+            instruction = loadConstant(constantIndex, precision);
+        }
+
+        bytecode.append(instruction);
     }
 
     @Override
