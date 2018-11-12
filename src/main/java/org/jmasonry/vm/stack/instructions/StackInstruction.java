@@ -2,6 +2,7 @@ package org.jmasonry.vm.stack.instructions;
 
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
+import org.jmasonry.vm.values.Value;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface StackInstruction {
             return new AggregatedInterpreter(interpreters);
         }
 
-        void push(int value);
+        void push(Value operand);
 
         void loadVariable(String name, Type type);
 

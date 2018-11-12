@@ -1,12 +1,16 @@
 package org.jmasonry.jvm.classfile.constants;
 
+import org.jmasonry.vm.values.Value;
+
 final class ConstantFactory {
-    static Constant intConst(int value) {
-        return new IntegerConstant(value);
-    }
+    private static final ValueConstantFactory valueConstantFactory = new ValueConstantFactory();
 
     static Constant utf8Const(String string) {
         return new UTF8Constant(string);
+    }
+
+    static Constant value(Value value) {
+        return value.map(valueConstantFactory);
     }
 
     static Constant classConst(int nameIndex) {
@@ -19,5 +23,9 @@ final class ConstantFactory {
 
     static Constant methodRef(int classIndex, int nameAndTypeIndex) {
         return new MethodRef(classIndex, nameAndTypeIndex);
+    }
+
+    static Constant padding() {
+        return new Padding();
     }
 }

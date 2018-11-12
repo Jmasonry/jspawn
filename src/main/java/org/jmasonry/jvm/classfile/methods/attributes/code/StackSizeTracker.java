@@ -2,7 +2,9 @@ package org.jmasonry.jvm.classfile.methods.attributes.code;
 
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.values.Precision;
 import org.jmasonry.vm.stack.instructions.StackInstruction;
+import org.jmasonry.vm.values.Value;
 
 final class StackSizeTracker implements StackInstruction.Interpreter {
     private int currentStackSize = 0;
@@ -13,8 +15,12 @@ final class StackSizeTracker implements StackInstruction.Interpreter {
     }
 
     @Override
-    public void push(int value) {
-        extendBy(1);
+    public void push(Value operand) {
+        if (Precision.of(operand) == Precision.EIGHT_BYTES) {
+            extendBy(2);
+        } else {
+            extendBy(1);
+        }
     }
 
     @Override
