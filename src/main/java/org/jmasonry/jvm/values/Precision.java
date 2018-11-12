@@ -3,6 +3,7 @@ package org.jmasonry.jvm.values;
 import org.jmasonry.vm.values.Value;
 
 public enum Precision {
+   ZERO_BYTES(0),
    BYTE(1),
    TWO_BYTES(2),
    FOUR_BYTES(4),
