@@ -39,4 +39,11 @@ final class AggregatedInterpreter implements StackInstruction.Interpreter {
          interpreter.returnTop(returnedType);
       }
    }
+
+   @Override
+   public void convert(Type sourceType, Type targetType) {
+      for (StackInstruction.Interpreter interpreter : interpreters) {
+         interpreter.convert(sourceType, targetType);
+      }
+   }
 }

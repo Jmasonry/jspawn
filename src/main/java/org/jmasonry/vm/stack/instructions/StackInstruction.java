@@ -15,7 +15,8 @@ public interface StackInstruction {
 
       void push(Value operand);
       void loadVariable(String name, Type type);
-      void call(Type methodOwner, MethodDeclaration methodDeclaration);
+      void convert(Type sourceType, Type targetType);
       void returnTop(Type returnedType);
+      void call(Type methodOwner, MethodDeclaration methodDeclaration);
    }
 }
