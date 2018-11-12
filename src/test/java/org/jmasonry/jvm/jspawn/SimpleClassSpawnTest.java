@@ -7,14 +7,9 @@ import org.jmasonry.jvm.types.FieldDeclaration;
 import org.jmasonry.jvm.types.Type;
 import org.jmasonry.jvm.types.TypeDeclaration;
 import org.jmasonry.jvm.types.TypeDefinition;
-import org.jmasonry.vm.stack.instructions.StackInstruction;
-import org.jmasonry.vm.stack.instructions.StackInstructions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -66,21 +61,6 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
     }
 
     @Test
-    void spawns_class_with_a_method() throws ReflectiveOperationException {
-        // given
-        String methodName = "foo";
-        List<StackInstruction> instructions = Collections.singletonList(StackInstructions.returnTyped(Type.unit()));
-        TypeDefinition definition = Declarations.typeWithSingleMethod(methodName, Type.unit(), instructions);
-
-        // when
-        Class<?> spawned = nest.spawn(definition);
-
-        // then
-        Method declaredMethod = spawned.getDeclaredMethod(methodName);
-        assertThat(declaredMethod).isNotNull();
-    }
-
-    @Test
     void spawns_class_with_default_constructor() throws ReflectiveOperationException {
         // given
         TypeDefinition definition = TypeDefinition.of(TYPE_DECLARATION, emptyList(), singletonList(constructor()));
@@ -92,5 +72,4 @@ class SimpleClassSpawnTest extends SpawnAbstractTest {
         // then
         assertThat(instance).isInstanceOf(Foo.class);
     }
-
 }
