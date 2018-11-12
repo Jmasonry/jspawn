@@ -3,18 +3,27 @@ package org.jmasonry.jvm.classfile.constants;
 
 import org.jmasonry.jvm.types.MethodDeclaration;
 import org.jmasonry.jvm.types.Type;
+import org.jmasonry.jvm.values.Precision;
+import org.jmasonry.vm.values.Value;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.jmasonry.jvm.classfile.constants.ConstantFactory.*;
+import static org.jmasonry.jvm.values.Precision.EIGHT_BYTES;
 
 public final class ConstantPoolBuilder {
     private final Map<Constant, Integer> cache = new LinkedHashMap<>();
 
-    public int appendInteger(int value) {
-        var constant = intConst(value);
-        return getOrCreate(constant);
+    public int appendValue(Value operand) {
+        var constant = value(operand);
+        int offset = getOrCreate(constant);
+
+        if (Precision.of(operand) == EIGHT_BYTES) {
+            getOrCreate(padding());
+        }
+
+        return offset;
     }
 
     public int appendUTF8(String string) {
@@ -54,7 +63,7 @@ public final class ConstantPoolBuilder {
         return new ConstantPool(constants);
     }
 
-    private Integer getOrCreate(Constant constant) {
+    private int getOrCreate(Constant constant) {
         return cache.computeIfAbsent(constant, k -> offset());
     }
 
